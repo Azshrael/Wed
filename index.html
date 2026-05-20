@@ -7,41 +7,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Playfair+Display:wght@400;700&amp;family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
     <style>
         :root {
-            --burgundy: #6B2D2D;
-            --gold: #D4AF87;
-            --cream: #F8F1E9;
-            --soft-pink: #E8C7C7;
+            --burgundy: #7A2C2C;
+            --deep-gold: #D4A017;
+            --cream: #F9F0E6;
+            --accent: #C48B6A;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Inter', system-ui, sans-serif;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #333;
-            overflow-x: hidden;
+            background: #fff;
+        }
+        
+        .pattern-bg {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(212, 160, 23, 0.08) 2%, transparent 3%),
+                radial-gradient(circle at 75% 75%, rgba(122, 44, 44, 0.06) 2%, transparent 3%);
+            background-size: 80px 80px;
         }
         
         .section {
-            padding: 80px 20px;
+            padding: 100px 20px;
             position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s ease-out;
         }
         
-        /* Фоновые изображения с плейсхолдерами */
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         .hero-bg {
             height: 100vh;
-            min-height: 700px;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1920x1080/6B2D2D/FFFFFF?text=ВАША_ФОТОГРАФИЯ_ВВЕРХУ') center/cover no-repeat;
+            min-height: 720px;
+            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), 
+                        url('https://via.placeholder.com/1920x1080/7A2C2C/FFFFFF?text=ВАША_ГЛАВНАЯ_ФОТОГРАФИЯ_ВВЕРХУ') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://i.ibb.co.com/0jKzL5Y/lace-divider-gold.png') center/contain repeat;
+            opacity: 0.07;
+            animation: subtleMove 80s linear infinite;
+        }
+        
+        @keyframes subtleMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
         }
         
         .content-wrapper {
@@ -54,76 +80,57 @@
         .date {
             font-family: 'Inter', sans-serif;
             font-weight: 500;
-            font-size: 2.8rem;
-            letter-spacing: 4px;
-            color: var(--gold);
-            margin-bottom: 20px;
+            font-size: 3rem;
+            letter-spacing: 6px;
+            color: var(--deep-gold);
+            text-shadow: 0 3px 10px rgba(0,0,0,0.4);
         }
         
         .names {
             font-family: 'Great Vibes', cursive;
-            font-size: 5.5rem;
-            line-height: 1.1;
+            font-size: 6.8rem;
+            line-height: 1;
             color: white;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            text-shadow: 0 6px 25px rgba(0,0,0,0.6);
         }
         
-        /* Кружевные разделители */
         .lace-divider {
-            height: 80px;
+            height: 90px;
             background: url('https://i.ibb.co.com/0jKzL5Y/lace-divider-gold.png') center/contain no-repeat;
-            background-size: 100% 100%;
-            opacity: 0.9;
-            margin: 40px 0;
+            margin: 50px auto;
+            opacity: 0.85;
         }
         
         .white-section {
             background: var(--cream);
-            color: #333;
         }
         
         .invitation-text {
-            font-size: 1.35rem;
-            max-width: 800px;
+            font-size: 1.42rem;
+            max-width: 820px;
             margin: 0 auto;
             text-align: center;
             font-weight: 300;
         }
         
-        .photo-placeholder {
-            width: 100%;
-            max-width: 700px;
-            margin: 60px auto;
-            border: 12px solid white;
-            box-shadow: 0 20px 40px rgba(107, 45, 45, 0.2);
-            overflow: hidden;
-        }
-        
-        .photo-placeholder img {
-            width: 100%;
-            display: block;
-        }
-        
-        /* Бегущие строки Save the Date */
         .marquee-container {
-            background: var(--burgundy);
+            background: linear-gradient(90deg, var(--burgundy), #9A3A3A);
             color: white;
-            padding: 25px 0;
+            padding: 28px 0;
             overflow: hidden;
             position: relative;
         }
         
         .marquee {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
+            font-size: 3rem;
             white-space: nowrap;
             display: inline-block;
-            animation: marquee 25s linear infinite;
+            animation: marquee 28s linear infinite;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         
-        .marquee-reverse {
-            animation-direction: reverse;
-        }
+        .marquee-reverse { animation-direction: reverse; }
         
         @keyframes marquee {
             from { transform: translateX(0); }
@@ -132,31 +139,42 @@
         
         .location-box {
             background: white;
-            padding: 50px 40px;
-            max-width: 700px;
+            padding: 55px 45px;
+            max-width: 720px;
             margin: 0 auto;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            border: 3px solid var(--gold);
+            box-shadow: 0 20px 45px rgba(122, 44, 44, 0.2);
+            border: 4px solid var(--deep-gold);
+            border-radius: 8px;
         }
         
         .btn {
             display: inline-block;
             margin-top: 25px;
-            padding: 16px 45px;
+            padding: 18px 52px;
             background: var(--burgundy);
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            letter-spacing: 2px;
-            border-radius: 4px;
-            transition: all 0.3s;
-            border: 2px solid var(--burgundy);
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            border-radius: 6px;
+            transition: all 0.4s ease;
+            border: 3px solid var(--burgundy);
+            font-size: 1.1rem;
         }
         
         .btn:hover {
             background: white;
             color: var(--burgundy);
+            transform: translateY(-4px);
+        }
+        
+        .closing {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.8rem;
+            text-align: center;
+            color: var(--burgundy);
+            margin: 40px 0;
         }
         
         .program-item {
@@ -166,63 +184,30 @@
         .program-time {
             font-weight: 600;
             color: var(--burgundy);
-            font-size: 1.3rem;
+            font-size: 1.35rem;
         }
         
-        .closing {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4.2rem;
-            text-align: center;
-            color: var(--burgundy);
-            margin: 60px 0 30px;
-        }
-        
-        footer {
-            background: #222;
-            color: #ddd;
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 0.95rem;
-        }
-        
-        /* Форма */
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        input, textarea, select {
+        input, textarea {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #ddd;
-            border-radius: 4px;
+            padding: 15px;
+            border: 2px solid #e0d4c8;
+            border-radius: 6px;
             font-family: inherit;
+            transition: border 0.3s;
         }
         
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+        input:focus, textarea:focus {
+            border-color: var(--burgundy);
+            outline: none;
         }
     </style>
 </head>
 <body>
 
     <!-- ГЕРОЙ -->
-    <section class="hero-bg">
+    <section class="hero-bg pattern-bg">
         <div class="content-wrapper">
-            <div style="text-align: right; max-width: 500px; margin-left: auto; padding-right: 40px;">
+            <div style="text-align: right; max-width: 520px; margin-left: auto; padding-right: 30px;">
                 <div class="date">12 июня 2026</div>
                 <div class="names">Андрей &amp; Василиса</div>
             </div>
@@ -230,7 +215,7 @@
     </section>
 
     <!-- ПРИГЛАШЕНИЕ -->
-    <section class="white-section section">
+    <section class="white-section section pattern-bg">
         <div class="content-wrapper">
             <p class="invitation-text">
                 Дорогие и любимые! В этом году есть один день, который мы отсчитываем с особым трепетом. 
@@ -241,37 +226,24 @@
                 Будем ждать вас, чтобы вместе создать теплый и искренний праздник.
             </p>
 
-            <!-- Место для второй картинки -->
-            <div class="photo-placeholder" style="margin-top: 70px;">
-                <img src="https://via.placeholder.com/700x500/E8C7C7/6B2D2D?text=ФОТО_2_НА_БЕЛОМ_ФОНЕ" alt="Фото 2">
-            </div>
-
-            <!-- Третья картинка под второй -->
-            <div class="photo-placeholder">
-                <img src="https://via.placeholder.com/700x500/E8C7C7/6B2D2D?text=ФОТО_3_ПОД_ВТОРОЙ" alt="Фото 3">
-            </div>
-
-            <!-- Бегущие строки -->
-            <div class="marquee-container">
+            <div class="marquee-container" style="margin: 70px 0;">
                 <div class="marquee">SAVE THE DATE • SAVE THE DATE • SAVE THE DATE • </div>
-                <div class="marquee marquee-reverse" style="margin-top: 15px;">SAVE THE DATE • SAVE THE DATE • SAVE THE DATE • </div>
+                <div class="marquee marquee-reverse" style="margin-top: 12px;">SAVE THE DATE • SAVE THE DATE • SAVE THE DATE • </div>
             </div>
         </div>
     </section>
 
     <!-- ЛОКАЦИЯ -->
-    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('https://via.placeholder.com/1920x900/6B2D2D/FFFFFF?text=ФОНОВАЯ_КАРТИНКА_ЛОКАЦИЯ') center/cover no-repeat; color: white;">
+    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1920x900/7A2C2C/FFFFFF?text=ФОН_ЛОКАЦИЯ') center/cover no-repeat; color: white;">
         <div class="content-wrapper">
             <div class="location-box">
-                <h2 style="font-family: 'Great Vibes', cursive; font-size: 3.2rem; margin-bottom: 20px; color: var(--burgundy);">Локация</h2>
-                <p style="font-size: 1.4rem; line-height: 1.5;">
-                    МО, Ленинский район,<br>
-                    деревня Суханово<br>
+                <h2 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--burgundy); margin-bottom: 15px;">Локация</h2>
+                <p style="font-size: 1.45rem; line-height: 1.6;">
+                    МО, Ленинский район, деревня Суханово<br>
                     <strong>УСАДЬБА СУХАНОВО</strong>
                 </p>
                 <a href="https://yandex.ru/maps/-/CPfpVXIg" target="_blank" class="btn">ПЕРЕЙТИ К КАРТЕ</a>
-                
-                <div style="margin-top: 40px; font-size: 1.5rem; color: var(--burgundy);">
+                <div style="margin-top: 45px; font-size: 1.6rem; color: var(--deep-gold);">
                     СБОР ГОСТЕЙ <strong>14:00</strong>
                 </div>
             </div>
@@ -279,9 +251,9 @@
     </section>
 
     <!-- ПРОГРАММА -->
-    <section class="white-section section">
+    <section class="white-section section pattern-bg">
         <div class="content-wrapper">
-            <h2 style="text-align: center; font-family: 'Great Vibes', cursive; font-size: 4rem; margin-bottom: 60px; color: var(--burgundy);">Программа дня</h2>
+            <h2 style="text-align:center; font-family:'Great Vibes',cursive; font-size:4.5rem; color:var(--burgundy); margin-bottom:60px;">Программа дня</h2>
             
             <div class="program-item">
                 <div class="program-time">14:00 — Сбор гостей</div>
@@ -302,17 +274,12 @@
         </div>
     </section>
 
-    <!-- ДЕТАЛИ + LOVE -->
-    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1920x900/6B2D2D/FFFFFF?text=ФОНОВАЯ_КАРТИНКА_ПОД_LOVE') center/cover no-repeat; color: white; padding-top: 120px;">
+    <!-- LOVE + ДЕТАЛИ -->
+    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('https://via.placeholder.com/1920x900/7A2C2C/FFFFFF?text=ФОН_С_НАДПИСЬЮ_LOVE') center/cover no-repeat; color: white; padding: 140px 20px;">
         <div class="content-wrapper" style="text-align: center;">
-            <div style="font-family: 'Great Vibes', cursive; font-size: 6rem; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.7);">Love</div>
+            <div style="font-family: 'Great Vibes', cursive; font-size: 7rem; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.7);">Love</div>
             
-            <!-- Картинка с цветами -->
-            <div class="photo-placeholder" style="max-width: 420px; border-color: rgba(255,255,255,0.9);">
-                <img src="https://via.placeholder.com/420x520/E8C7C7/6B2D2D?text=ФОТО_С_ЦВЕТАМИ" alt="Цветы">
-            </div>
-            
-            <p style="max-width: 700px; margin: 50px auto; font-size: 1.3rem;">
+            <p style="max-width: 780px; margin: 50px auto; font-size: 1.35rem;">
                 Главное для нас – это вы. Ваше присутствие – лучший подарок и украшение праздника. 
                 А если вы захотите поддержать цветовую гамму нашей свадьбы, мы будем безмерно благодарны и счастливы!
             </p>
@@ -320,11 +287,11 @@
     </section>
 
     <!-- ДЕТАЛИ ПОДАРКОВ -->
-    <section class="white-section section">
+    <section class="white-section section pattern-bg">
         <div class="content-wrapper">
-            <h2 style="text-align: center; font-family: 'Great Vibes', cursive; font-size: 3.5rem; margin-bottom: 40px; color: var(--burgundy);">Детали</h2>
+            <h2 style="text-align: center; font-family: 'Great Vibes', cursive; font-size: 3.6rem; margin-bottom: 40px; color: var(--burgundy);">Детали</h2>
             
-            <p style="max-width: 800px; margin: 0 auto 50px; text-align: center; font-size: 1.25rem;">
+            <p style="max-width: 800px; margin: 0 auto 50px; text-align: center; font-size: 1.28rem;">
                 Лучшая поддержка для нас – ваши искренние пожелания и лучезарные улыбки!<br><br>
                 Мы не хотим утруждать вас выбором подарка, поэтому будем благодарны за любой вклад в бюджет нашего совместного будущего.<br><br>
                 Мы ценим традиции, но, к сожалению, не сможем в полной мере насладиться красотой и ароматом цветов. 
@@ -340,7 +307,7 @@
     </section>
 
     <!-- ОРГАНИЗАТОР -->
-    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('https://via.placeholder.com/1920x800/6B2D2D/FFFFFF?text=ФОНОВАЯ_КАРТИНКА_ОРГАНИЗАТОР') center/cover no-repeat; color: white;">
+    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1920x800/7A2C2C/FFFFFF?text=ФОН_ОРГАНИЗАТОР') center/cover no-repeat; color: white;">
         <div class="content-wrapper">
             <div class="location-box" style="background: rgba(255,255,255,0.95); color: #333;">
                 <h2 style="color: var(--burgundy);">Связаться с организатором</h2>
@@ -355,10 +322,12 @@
     </section>
 
     <!-- АНКЕТА -->
-    <section class="white-section section" id="rsvp">
+    <section class="white-section section pattern-bg" id="rsvp">
         <div class="content-wrapper">
             <h2 style="text-align: center; font-family: 'Great Vibes', cursive; font-size: 3.8rem; margin-bottom: 20px; color: var(--burgundy);">Анкета гостя</h2>
-            <p style="text-align: center; margin-bottom: 50px;">Пожалуйста, дайте нам знать, сможете ли вы разделить с нами этот день до: <strong>10.05.2026</strong></p>
+            <p style="text-align: center; margin-bottom: 50px; font-size: 1.25rem;">
+                Пожалуйста, дайте нам знать, сможете ли вы разделить с нами этот день до: <strong>10.05.2026</strong>
+            </p>
             
             <form id="rsvpForm" style="max-width: 700px; margin: 0 auto;">
                 <div class="form-group">
@@ -368,7 +337,7 @@
                 
                 <div class="form-group">
                     <label>Вы будете на свадьбе?</label>
-                    <div class="radio-group">
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
                         <label><input type="radio" name="attend" value="yes" required> Да, конечно! Ни за что не пропущу!</label>
                         <label><input type="radio" name="attend" value="no"> К сожалению, нет, но я буду с вами мысленно!</label>
                     </div>
@@ -376,7 +345,7 @@
                 
                 <div class="form-group">
                     <label>С кем вы придёте?</label>
-                    <div class="radio-group">
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
                         <label><input type="radio" name="companion" value="alone"> Один / одна</label>
                         <label><input type="radio" name="companion" value="couple"> С парой (второй половинкой)</label>
                     </div>
@@ -384,16 +353,16 @@
                 
                 <div class="form-group">
                     <label>Есть ли у вас аллергии или особые пожелания по еде?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="allergy" value="no" onclick="toggleAllergyField(false)"> Нет</label>
-                        <label><input type="radio" name="allergy" value="yes" onclick="toggleAllergyField(true)"> Да</label>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+                        <label><input type="radio" name="allergy" value="no" onclick="toggleField(false)"> Нет</label>
+                        <label><input type="radio" name="allergy" value="yes" onclick="toggleField(true)"> Да</label>
                     </div>
-                    <input type="text" id="allergyDetails" placeholder="Напишите ваши пожелания" style="display: none; margin-top: 10px;">
+                    <input type="text" id="allergyDetails" placeholder="Напишите ваши пожелания" style="display: none; margin-top: 12px;">
                 </div>
                 
                 <div class="form-group">
                     <label>Ваши предпочтения по напиткам:</label>
-                    <div class="checkbox-group">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
                         <label><input type="checkbox" name="drinks" value="champagne"> Шампанское</label>
                         <label><input type="checkbox" name="drinks" value="red"> Красное вино</label>
                         <label><input type="checkbox" name="drinks" value="white"> Белое вино</label>
@@ -408,71 +377,45 @@
                     <textarea id="songs" rows="3" placeholder="Напишите названия..."></textarea>
                 </div>
                 
-                <button type="submit" class="btn" style="width: 100%; font-size: 1.3rem;">ПОДТВЕРДИТЬ ПРИСУТСТВИЕ</button>
+                <button type="submit" class="btn" style="width: 100%; font-size: 1.25rem; margin-top: 20px;">ПОДТВЕРДИТЬ ПРИСУТСТВИЕ</button>
             </form>
         </div>
     </section>
 
     <!-- ЗАКЛЮЧЕНИЕ -->
-    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1920x900/6B2D2D/FFFFFF?text=ФИНАЛЬНАЯ_ФОТОГРАФИЯ') center/cover no-repeat; color: white; padding: 140px 20px 100px;">
+    <section class="section" style="background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('https://via.placeholder.com/1920x900/7A2C2C/FFFFFF?text=ФИНАЛЬНАЯ_ФОТОГРАФИЯ') center/cover no-repeat; color: white; padding: 160px 20px 120px;">
         <div class="content-wrapper" style="text-align: center;">
             <div class="closing">До скорой встречи и с любовью,</div>
-            <div style="font-family: 'Great Vibes', cursive; font-size: 4.5rem; color: white;">Сергей и Галина</div>
+            <div style="font-family: 'Great Vibes', cursive; font-size: 5rem; color: white;">Сергей и Галина</div>
         </div>
     </section>
 
-    <footer>
-        <p>Сайт-приглашение создано с любовью для Андрея и Василисы • 12 июня 2026</p>
+    <footer style="background:#222; color:#ddd; text-align:center; padding:40px 20px; font-size:0.95rem;">
+        Сайт-приглашение создано с любовью для Андрея и Василисы • 12 июня 2026
     </footer>
 
     <script>
-        // Плавная прокрутка
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Появление секций
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        });
+        }, { threshold: 0.15 });
         
-        function toggleAllergyField(show) {
+        sections.forEach(section => observer.observe(section));
+
+        function toggleField(show) {
             document.getElementById('allergyDetails').style.display = show ? 'block' : 'none';
         }
         
-        // Обработка формы
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                attend: document.querySelector('input[name="attend"]:checked')?.value,
-                companion: document.querySelector('input[name="companion"]:checked')?.value,
-                allergy: document.querySelector('input[name="allergy"]:checked')?.value,
-                allergyDetails: document.getElementById('allergyDetails').value,
-                drinks: Array.from(document.querySelectorAll('input[name="drinks"]:checked')).map(cb => cb.value),
-                songs: document.getElementById('songs').value
-            };
-            
-            console.log('Анкета:', formData);
-            
-            // Здесь можно добавить отправку на email через Formspree, EmailJS и т.д.
-            alert('Спасибо! Ваша анкета успешно отправлена. Мы очень рады, что вы будете с нами ❤️');
-            
-            // Сброс формы
+            alert('Спасибо! Ваша анкета успешно отправлена ❤️ Мы очень рады видеть вас на нашей свадьбе!');
             this.reset();
             document.getElementById('allergyDetails').style.display = 'none';
-        });
-        
-        // Дополнительная анимация появления
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight * 0.8) {
-                    section.style.opacity = '1';
-                }
-            });
         });
     </script>
 </body>
